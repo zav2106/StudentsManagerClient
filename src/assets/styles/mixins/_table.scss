@@ -1,0 +1,40 @@
+@mixin set-fixed-table(
+  $table-col-widths: (),
+  $table-after-space: 0,
+  $thead-height: 0,
+  $tfoot-height: 0,
+  $row-height: 40px,
+  $thead-first-child-padding-left: 36px
+) {
+  & {
+    height: if($table-after-space > 0, calc(100% - #{$table-after-space}), 100%);
+    td {
+      height: $row-height;
+    }
+    td, th {
+      @if (length($table-col-widths) > 0) {
+        @for $i from 1 through length($table-col-widths) {
+          $width: nth($table-col-widths, $i);
+          &:nth-child(#{$i}) {
+            flex-basis: percentage($width / 100);
+            width: percentage($width / 100);
+            max-width: percentage($width / 100);
+          }
+        }
+      }
+      &:first-child {
+        padding-left: $thead-first-child-padding-left;
+      }
+    }
+    thead {
+      height: $thead-height;
+    }
+    tfoot {
+      height: $tfoot-height;
+    }
+    tbody {
+      top: $thead-height;
+      bottom: $tfoot-height;
+    }
+  }
+}

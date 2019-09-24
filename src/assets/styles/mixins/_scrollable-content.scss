@@ -1,0 +1,33 @@
+@mixin scrollable-content(
+  $header-height: 0,
+  $footer-height: 0,
+  $wrapper-height: 100vh,
+  $host-wrapper: true
+) {
+  $wrapper-selector: if($host-wrapper, ':host', '.app-scrollable-content-wrapper');
+  #{$wrapper-selector} {
+    display: block;
+    position: relative;
+    height: $wrapper-height;
+    overflow: hidden;
+    /deep/ .app-scrollable-content-header,
+    /deep/ .app-scrollable-content-footer,
+    /deep/ .app-scrollable-content-body {
+      position: absolute;
+      left: 0; right: 0;
+    }
+    /deep/ .app-scrollable-content-header {
+      height: $header-height;
+      top: 0;
+    }
+    /deep/ .app-scrollable-content-footer {
+      height: $footer-height;
+      bottom: 0;
+    }
+    /deep/ .app-scrollable-content-body {
+      overflow: auto;
+      top: $header-height;
+      bottom: $footer-height;
+    }
+  }
+}

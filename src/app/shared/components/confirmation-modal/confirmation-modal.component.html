@@ -1,0 +1,30 @@
+<ng-template #modalContent>
+  <div class="p-2">
+    <div *ngIf="title" class="modal-header">
+      <h4 class="modal-title font-weight-bold" [ngClass]="{
+        'title-red': confirmationModalType == ConfirmationModalType.delete,
+        'title-gray': confirmationModalType == ConfirmationModalType.confirmation
+      }" id="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+      <p class="mb-0" [innerHTML]="text">{{text}}</p>
+    </div>
+    <div class="modal-footer pt-0">
+      <button
+        *ngIf="confirmationModalType === ConfirmationModalType.notification"
+        type="button"
+        class="btn btn-primary"
+        (click)="confirmClick()">Закрыть</button>
+      <button
+        *ngIf="confirmationModalType === ConfirmationModalType.confirmation || confirmationModalType == ConfirmationModalType.delete"
+        class="app-button"
+        type="button"
+        (click)="confirmClick()">Да</button>
+      <button
+        *ngIf="confirmationModalType === ConfirmationModalType.confirmation || confirmationModalType == ConfirmationModalType.delete"
+        type="button"
+        class="app-button"
+        (click)="declineClick()">Нет</button>
+    </div>
+  </div>
+</ng-template>

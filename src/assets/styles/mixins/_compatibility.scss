@@ -1,0 +1,30 @@
+// Use for browser, os and device compatibility, by passing named parameters, where parameter name is used as first
+// part of resulting class name and second is used as the second part. Both parts are delimited by double underscore '__'.
+// This mixin is used along with third-party module - DeviceDetectorModule which injected in root module.
+// Usually, parameter names should any of the following:
+// - $browser
+// - $browser_version
+// - $os
+// - $os_version
+// - $device
+//
+// Example:
+// Make H1 element red only for Internet Explorer 10
+//
+// h1 {
+//   @include compatibility($browser: 'ie', $browser_version: '10.0') {
+//     color: red;
+//   }
+// }
+
+@mixin compatibility($args...) {
+  $selector: 'body';
+  $keywords: keywords($args);
+  @each $key, $val in $keywords {
+    $class_name: '.#{$key}__#{$val}';
+    $selector: selector_append($selector, $class_name);
+  }
+  #{$selector} & {
+    @content;
+  }
+}

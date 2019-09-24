@@ -1,0 +1,58 @@
+<ng-container>
+  <div class="container">
+    <div class="d-flex p-2 mt-3">
+      <h4>Students</h4>
+    </div>
+    <app-students-search #studentsSearch (onRefresh)="getStudents()"></app-students-search>
+    <div class="d-flex justify-content-between p-2">
+      <button type="button" class="app-button btn btn-outline-primary" (click)="addStudent()">
+        <i class="fo-plus"></i>
+        Add Student
+      </button>
+      <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+        <option [value]="10">10 {{ itemsPerPageCaption }}</option>
+        <option [value]="25">25 {{ itemsPerPageCaption }}</option>
+        <option [value]="50">50 {{ itemsPerPageCaption }}</option>
+      </select>
+    </div>
+    <div class="d-flex justify-content-between p-2">
+      <span class="paged-result">Total: {{ totalRows }}</span>
+      <ngb-pagination [collectionSize]="totalRows" [(page)]="page" [pageSize]="pageSize" (pageChange)="onPageChanged()"></ngb-pagination>
+    </div>
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col" style="width: 5%;">Id</th>
+        <th scope="col" style="width: 20%;">Identifier</th>
+        <th scope="col" style="width: 20%;">First Name</th>
+        <th scope="col" style="width: 20%;">Last Name</th>
+        <th scope="col" style="width: 20%;">Middle Name</th>
+        <th scope="col" style="width: 15%;">Gender</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of items; let i = index">
+<!--        <td>{{ (page - 1) * pageSize + i + 1 }}</td>-->
+<!--        <td>-->
+<!--          <a href="javascript:" (click)="editStudent(item.id)">{{ item.firstName }}</a>-->
+<!--        </td>-->
+        <td> <a href="javascript:" (click)="editStudent(item.id)">{{ item.id }}</a> </td>
+        <td>{{item.identifier}}</td>
+        <td>{{item.firstName}}</td>
+        <td>{{item.lastName}}</td>
+        <td>{{item.middleName}}</td>
+        <td>{{item.gender}}</td>
+      </tr>
+      <tr *ngIf="totalRows === 0">
+        <td colspan="7" align="center" valign="middle">
+          <h5 class="m-3">Student not found, specify search string</h5>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+<app-confirmation-modal #confirmModal></app-confirmation-modal>
+
+
